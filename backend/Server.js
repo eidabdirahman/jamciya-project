@@ -2,14 +2,16 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import path from 'path';
-import cookieParser from 'cookie-parser'; 
+import cookieParser from 'cookie-parser';
+import cors from 'cors'; // Import CORS middleware
 import ConnectDB from './Config/db.js';
 import departmentRoutes from './routes/departmentRoutes.js';
 import newsRoutes from './routes/newsRoutes.js';
 import projectRoutes from './routes/projectRoutes.js';
 import blogRoutes from './routes/blogRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-import partnerRoutes from './routes/PartnerRoutes.js'
+import partnerRoutes from './routes/PartnerRoutes.js';
+import videoRoutes from './routes/videoRoutes.js';
 import achievementRoutes from './routes/achievementRoutes.js';
 import { errorHandler, notFound } from './middlewares/errorHandler.js';
 
@@ -25,7 +27,18 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser()); 
+app.use(cookieParser());
+app.use(cors()); // Use CORS middleware
+
+// Root route handler
+app.get('/', (req, res) => {
+  res.send('Welcome to the API!');
+});
+
+// Route handler for /blogs
+app.get('/blogs', (req, res) => {
+  res.redirect('/api/blogs');
+});
 
 // Routes
 app.use('/api/departments', departmentRoutes);
@@ -35,6 +48,7 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/achievements', achievementRoutes);
 app.use('/api/partners', partnerRoutes);
+app.use('/api/videos', videoRoutes);
 
 // Error handling middleware
 app.use(notFound);

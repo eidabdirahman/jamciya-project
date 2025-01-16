@@ -7,14 +7,16 @@ import News from './data/News.js';
 import Projects from './data/Projects.js';
 import Blogs from './data/Blogs.js';
 import Achievements from './data/Achievements.js';
-import Partners from './data/Partners.js'; // Import sample partner data
+import Partners from './data/Partners.js'; 
+import Videos from './data/Video.js'; // Import sample video data
 import User from './models/UserModal.js';
 import Department from './models/DepartmentModal.js';
 import NewsModel from './models/NewsModal.js';
 import Project from './models/ProjectModal.js';
 import Blog from './models/BlogModal.js';
 import Achievement from './models/AchievementModal.js';
-import Partner from './models/PartnerModal.js'; // Import Partner model
+import Partner from './models/PartnerModal.js'; 
+import Video from './models/VideoModel.js'; // Import Video model
 import ConnectDB from './Config/db.js';
 
 dotenv.config();
@@ -46,6 +48,9 @@ const importData = async () => {
 
         await Partner.deleteMany();
         console.log('Partners deleted');
+
+        await Video.deleteMany();
+        console.log('Videos deleted'); // Logging for videos
 
         // Insert new data
         const createdUsers = await User.insertMany(Users);
@@ -89,6 +94,12 @@ const importData = async () => {
         await Partner.insertMany(samplePartners);
         console.log('Inserted Partners');
 
+        const sampleVideos = Videos.map((video) => {
+            return { ...video, user: adminUser };
+        });
+        await Video.insertMany(sampleVideos);
+        console.log('Inserted Videos'); // Logging for videos
+
         console.log(colors.green('Data Imported!'));
         process.exit();
 
@@ -123,6 +134,9 @@ const destroyData = async () => {
 
         await Partner.deleteMany();
         console.log('Partners deleted');
+
+        await Video.deleteMany();
+        console.log('Videos deleted'); // Logging for videos
 
         console.log(colors.red('Data Destroyed!'));
         process.exit();

@@ -8,6 +8,14 @@ const departmentSchema = mongoose.Schema({
     DepartmentHead: {
         type: String
     },
+    Description: {
+        type: String,
+        required: true
+    },
+    Image: {
+        type: String, 
+        required: false
+    },
     CreatedAt: {
         type: Date,
         default: Date.now

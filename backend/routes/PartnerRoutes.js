@@ -11,8 +11,7 @@ import upload from '../middlewares/uploadMiddleware.js';
 
 router.route('/')
   .get(getPartners)
-  .post(authenticate, admin, upload.single('image'), createPartner);
-
+  .post( upload.single('image'), createPartner);
 router.route('/:id')
   .get(getPartnerById)
   .put(authenticate, admin, upload.single('image'), updatePartner)

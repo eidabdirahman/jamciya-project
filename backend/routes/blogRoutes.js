@@ -1,22 +1,23 @@
 import express from 'express';
 import {
-    getBlogs,
-    createBlog,
-    getBlogById,
-    updateBlog,
-    deleteBlog
+  getBlogs,
+  createBlog,
+  getBlogById,
+  updateBlog,
+  deleteBlog
 } from '../controllers/blogController.js';
+import upload from '../middlewares/uploadImageMiddleware.js';
 import { authenticate, admin } from '../middlewares/authenticate.js';
 
 const router = express.Router();
 
 router.route('/')
-    .get( getBlogs)
-    .post(authenticate, admin, createBlog);
+  .get(getBlogs)
+  .post(upload.single('image'), createBlog); 
 
 router.route('/:id')
-    .get(authenticate, getBlogById)
-    .put(authenticate, admin, updateBlog)
-    .delete(authenticate, admin, deleteBlog);
+  .get(getBlogById)
+  .put(upload.single('image'), updateBlog) 
+  .delete(deleteBlog);
 
 export default router;

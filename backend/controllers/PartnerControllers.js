@@ -28,20 +28,22 @@ const getPartnerById = asyncHandler(async (req, res) => {
 // @desc    Create a new partner
 // @route   POST /api/partners
 // @access  Private/Admin
+//create partner
 const createPartner = asyncHandler(async (req, res) => {
   const { name, description, website } = req.body;
-  const image = req.file ? req.file.path : null;
+  const image = req.file ? `/uploads/${req.file.filename}` : '';
 
   const partner = new Partner({
-    name,
-    description,
-    website,
-    image,
+    name: 'Sample Name',
+    description: 'Sample Description',
+    website: 'http://www.samplewebsite.com',
+    image: '/images/sample.jpg',
   });
 
   const createdPartner = await partner.save();
   res.status(201).json(createdPartner);
 });
+
 
 // @desc    Update a partner
 // @route   PUT /api/partners/:id

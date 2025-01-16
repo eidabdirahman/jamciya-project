@@ -10,11 +10,20 @@ const getProjects = asyncHandler(async (req, res) => {
 // Create a new project
 const createProject = asyncHandler(async (req, res) => {
     const { ProjectName, Description, StartDate, EndDate, ManagerID } = req.body;
-    const newProject = new Project({ ProjectName, Description, StartDate, EndDate, ManagerID });
-
-    await newProject.save();
-    res.status(201).json(newProject);
-});
+  
+    const project = new Project({
+      ProjectName: 'Sample Project Name',
+      Description: 'Sample Description',
+      StartDate: new Date(),
+      EndDate: new Date(),
+      status: 'ongoing',
+      image: '/images/sample-project.jpg',
+    });
+  
+    const createdProject = await project.save();
+    res.status(201).json(createdProject);
+  });
+  
 
 // Get a single project by ID
 const getProjectById = asyncHandler(async (req, res) => {

@@ -1,22 +1,23 @@
 import express from 'express';
 import {
-    getDepartments,
-    getDepartmentById,
-    createDepartment,
-    updateDepartment,
-    deleteDepartment
+  getDepartments,
+  getDepartmentById,
+  createDepartment,
+  updateDepartment,
+  deleteDepartment
 } from '../controllers/departmentController.js';
 import { authenticate, admin } from '../middlewares/authenticate.js';
+import upload from '../middlewares/uploadImageMiddleware.js';
 
 const router = express.Router();
 
 router.route('/')
-    .get(authenticate, getDepartments)
-    .post(authenticate, admin, createDepartment);
+  .get(getDepartments)
+  .post(upload.single('Image'), createDepartment);
 
 router.route('/:id')
-    .get(authenticate, getDepartmentById)
-    .put(authenticate, admin, updateDepartment)
-    .delete(authenticate, admin, deleteDepartment);
+  .get(getDepartmentById)
+  .put(upload.single('Image'), updateDepartment)
+  .delete(deleteDepartment);
 
 export default router;

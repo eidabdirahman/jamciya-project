@@ -1,8 +1,12 @@
-
+import AboutUsHeader from "./AboutHeader";
+import AboutUsSection from "./AboutUsSection";
+import AdvisoryBoard from "./Advisorypage";
 const About = () => {
   return (
     <div>
-      about page
+     <AboutUsHeader/>
+     <AboutUsSection/>
+     <AdvisoryBoard/>
     </div>
   )
 }

@@ -11,12 +11,12 @@ import { authenticate, admin } from '../middlewares/authenticate.js';
 const router = express.Router();
 
 router.route('/')
-    .get(authenticate, getProjects)
-    .post(authenticate, admin, createProject);
+    .get(getProjects)
+    .post(createProject);
 
 router.route('/:id')
-    .get(authenticate, getProjectById)
-    .put(authenticate, admin, updateProject)
-    .delete(authenticate, admin, deleteProject);
+    .get(getProjectById)
+    .put(updateProject)
+    .delete( deleteProject);
 
 export default router;

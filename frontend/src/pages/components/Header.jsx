@@ -1,56 +1,112 @@
 import { useState } from "react";
-import { Menu } from "lucide-react";
-import { Link } from "react-router-dom"; 
-import logo from "../../../public/logo.jpeg";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import logo from "../public/logo.jpeg";
 
+// Main Header Component
 const Header = () => {
+  const pathname = useLocation().pathname;
+  const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const menuItems = [
+    { title: 'Home', href: '/' },
     { title: 'About Us', href: '/about' },
     { title: 'Our Departments', href: '/departments' },
-    { title: 'News', href: '/news' },
     { title: 'Projects', href: '/projects' },
-    { title: 'Blog', href: '/blog' },
+    { title: 'Blogs', href: '/blogs' },
+    { title: 'Be a member', href: '/member' },
     { title: 'Contact Us', href: '/contact' },
   ];
 
+  const toggleMenu = () => setDropdownOpen(!dropdownOpen);
+
+  const handleItemClick = (href) => {
+    setDropdownOpen(false);
+    navigate(href);
+  };
+
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-white border-b shadow-sm fixed top-0 w-full z-50">
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-        <div className="text-xl font-bold">
-          <Link to="/" className="flex items-center gap-3">
-            <img
-              src={logo}
-              width={80}
-              height={80}
-              alt="logo"
-              loading="lazy"
-            />
-            <p>Jam’iyyah Al-Quran wa-Sunnah</p>
-          </Link>
-        </div>
-
-        <div className="hidden md:flex space-x-6">
-          {menuItems.map((item, index) => (
-            <Link 
-              key={index} 
-              to={item.href} 
-              className="text-gray-700 hover:text-blue-700 hover:underline underline-offset-2 font-bold transition duration-300"
-            >
-              {item.title}
-            </Link>
-          ))}
-        </div>
-
-        <div className="md:hidden flex items-center">
-          <button onClick={() => setDropdownOpen(!dropdownOpen)}>
-            <Menu className="w-6 h-6 text-gray-700" />
-          </button>
-        </div>
+        <Logo />
+        <DesktopNav items={menuItems} pathname={pathname} />
+        <MobileMenuButton isOpen={dropdownOpen} toggleMenu={toggleMenu} />
       </div>
+      {dropdownOpen && <MobileNav items={menuItems} pathname={pathname} onItemSelect={handleItemClick} />}
     </nav>
   );
 };
+
+// Logo Component
+const Logo = () => (
+  <div className="flex-shrink-0 flex items-center">
+    <Link to="/" className="flex items-center gap-2">
+      <img
+        src={logo}
+        width={70}
+        height={60}
+        alt="logo"
+        loading="lazy"
+      />
+      <p className="text-xl font-bold text-blue-500">Jam’iyyah Al-Quran wa-Sunnah</p>
+    </Link>
+  </div>
+);
+
+// Desktop Navigation Component
+const DesktopNav = ({ items, pathname }) => (
+  <div className="hidden md:flex space-x-6 items-center">
+    {items.map((item) => (
+      <Link
+        key={item.href}
+        to={item.href}
+        className={`text-gray-700 hover:text-blue-400 capitalize transition-colors duration-200 ${pathname === item.href ? 'text-blue-700 font-semibold' : ''}`}
+      >
+        {item.title}
+      </Link>
+    ))}
+    <Link
+      to="/login"
+      className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200 ml-6"
+    >
+      Signin
+    </Link>
+  </div>
+);
+
+// Mobile Menu Button Component
+const MobileMenuButton = ({ isOpen, toggleMenu }) => (
+  <div className="md:hidden flex items-center">
+    <button onClick={toggleMenu} className="focus:outline-none">
+      {isOpen ? <X className="w-6 h-6 text-gray-700" /> : <Menu className="w-6 h-6 text-gray-700" />}
+    </button>
+  </div>
+);
+
+// Mobile Navigation Component
+const MobileNav = ({ items, pathname, onItemSelect }) => (
+  <div className="md:hidden bg-white shadow-md">
+    <div className="container mx-auto px-4 py-2">
+      <div className="flex flex-col space-y-4">
+        {items.map((item) => (
+          <button
+            key={item.href}
+            onClick={() => onItemSelect(item.href)}
+            className={`block w-full text-left text-gray-700 hover:text-blue-400 capitalize transition-colors duration-200 ${pathname === item.href ? 'text-blue-700 font-semibold' : ''}`}
+          >
+            {item.title}
+          </button>
+        ))}
+        <button
+          onClick={() => onItemSelect('/login')}
+          className="font-light rounded-full bg-primary text-white hover:bg-green-700"
+        >
+          Signin
+        </button>
+      </div>
+    </div>
+  </div>
+);
 
 export default Header;

@@ -1,135 +1,79 @@
-import { Facebook, Instagram, Mail, PhoneCall, Youtube } from 'lucide-react';
-import logo from '../../../public/logo.jpeg'; // Adjust the path according to your project structure
+import { Facebook, Instagram, Mail, PhoneCall, Youtube, MapPin } from 'lucide-react';
+import logo from '../public/logo.jpeg'; 
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#004A64] text-white py-10 mt-40">
-      <div className="container mx-auto px-6 flex flex-wrap justify-between">
-        <div className="w-full sm:w-1/3 text-center sm:text-left mb-6 sm:mb-0">
-          <h2 className="text-lg font-bold uppercase mb-4 text-[#F48024]">
-            About the Institute
-          </h2>
-          <p className="bg-[#F48024] w-72 h-[0.8px] my-4"></p>
-          <img
-            src={logo}
-            alt="Institute Logo"
-            className="mx-auto sm:mx-0 w-32 mb-4"
-          />
-          <div className="flex justify-center sm:justify-start gap-4">
-            <Youtube />
-            <Instagram />
-            <Facebook />
-          </div>
-          <div className="mt-4">
-            <p className="flex items-center justify-center sm:justify-start gap-3">
-              <Mail size={20} className="text-[#f48023]" />
-              jnks@gmail.com
-            </p>
-            <p className="flex items-center justify-center sm:justify-start mt-2 gap-3">
-              <PhoneCall size={20} className="text-[#f48023]" />
-              +252 63 000000
+    <footer className="bg-gradient-to-br from-blue-300 via-blue-500 to-blue-700 text-white py-10">
+      <div className="container mx-auto px-6 sm:px-8 md:px-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          {/* Branding Section */}
+          <div className="flex flex-col items-center md:items-start text-center md:text-left">
+            <Link to="/" className="flex items-center mb-4">
+              <img
+                src={logo}
+                alt="Institute Logo"
+                className="h-14 w-14 rounded-full shadow-lg"
+              />
+              <span className="text-primary ml-3 text-2xl font-bold">jam'iyyah al Quran wa-sunnah</span>
+            </Link>
+            <p className="text-sm leading-relaxed ">
+              Our institute is dedicated to providing quality education and fostering
+              a community of lifelong learners. Join us on a journey of knowledge and growth.
             </p>
           </div>
-        </div>
 
-        <div className="w-full sm:w-1/3 text-center sm:text-left mb-6 sm:mb-0">
-          <h2 className="text-lg font-bold uppercase  text-[#F48024] ">
-            Index
-          </h2>
-
-          <p className="bg-[#F48024] w-72 h-[0.8px] my-4"></p>
-          <ul className="space-y-2">
-            <li>
-              <a href="#" className="hover:text-[#F48024]">
-                Home
+          {/* Social Media Section */}
+          <div className="flex flex-col items-center md:items-end text-center md:text-right">
+            <h3 className="text-lg font-semibold  mb-4">Stay Connected</h3>
+            <p className="text-sm mb-4">
+              Follow us on social media for the latest updates and innovations.
+            </p>
+            <div className="flex space-x-6">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="hover:text-green-400"
+              >
+                <Facebook size={20} />
               </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-[#F48024]">
-                About Us
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Twitter"
+                className="hover:text-green-400"
+              >
+                <i className="fab fa-twitter text-xl"></i>
               </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-[#F48024]">
-                Projects
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="hover:text-green-400"
+              >
+                <Instagram size={20} />
               </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-[#F48024]">
-                News
+              <a
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+                className="hover:text-green-400"
+              >
+                <Youtube size={20} />
               </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-[#F48024]">
-                Gallery
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-[#F48024]">
-                Contact Us
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-[#F48024]">
-                FAQ
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div className="w-full sm:w-1/3">
-          <h2 className="text-lg font-bold uppercase mb-4 text-[#F48024]">
-            What&apos;s New?
-          </h2>
-          <p className="bg-[#F48024] w-72 h-[0.8px] my-4"></p>
-          <div className="space-y-4">
-            <div className="flex items-center gap-4">
-              <img
-                src="/2.jpeg"
-                alt="News 1"
-                className="w-16 h-16 object-cover"
-              />
-              <div>
-                <h3 className="text-sm font-bold">
-                  The Way of The Servant of Allah
-                </h3>
-                <p className="text-xs">Sh. Khalid Ahmed | 2022-08-12</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <img
-                src="/2.jpeg"
-                alt="News 2"
-                className="w-16 h-16 object-cover"
-              />
-              <div>
-                <h3 className="text-sm font-bold">
-                  The Way of The Students of Knowledge
-                </h3>
-                <p className="text-xs">Sh. A/basid barawe | 2022-08-12</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <img
-                src="/1.jpeg"
-                alt="News 3"
-                className="w-16 h-16 object-cover"
-              />
-              <div>
-                <h3 className="text-sm font-bold">
-                  Meditations on The Concept of Iman
-                </h3>
-                <p className="text-xs">Dr. Khadar | 2022-08-12</p>
-              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="text-center text-xs mt-6">
-        <p>All Rights Are Reserved</p>
+        {/* Bottom Line */}
+        <div className="mt-8 text-center border-t pt-4 text-sm ">
+          <p>&copy; 2025 jam'iyyah. All Rights Reserved.</p>
+        </div>
       </div>
     </footer>
   );
