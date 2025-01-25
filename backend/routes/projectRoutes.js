@@ -12,11 +12,11 @@ const router = express.Router();
 
 router.route('/')
     .get(getProjects)
-    .post(createProject);
+    .post(authenticate, admin, createProject);
 
 router.route('/:id')
-    .get(getProjectById)
-    .put(updateProject)
-    .delete( deleteProject);
+    .get(authenticate, getProjectById)
+    .put(authenticate, admin, updateProject)
+    .delete(authenticate, admin, deleteProject);
 
 export default router;

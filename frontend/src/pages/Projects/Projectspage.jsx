@@ -9,7 +9,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { useGetProjectsQuery } from '@/slices/projectApiSlice';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { Loader } from 'lucide-react';
 
 const ProjectPage = () => {
@@ -22,7 +22,6 @@ const ProjectPage = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <Toaster />
       <motion.div
         className="text-center"
         initial={{ opacity: 0, y: -20 }}
@@ -37,7 +36,7 @@ const ProjectPage = () => {
       ) : error ? (
         <p>Error loading projects</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"> {/* Adjusted the grid to have larger gaps */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <motion.div
               key={project._id}
@@ -45,13 +44,13 @@ const ProjectPage = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="bg-white shadow-md rounded-lg overflow-hidden" style={{ height: '100%' }}> {/* Increased card size */}
+              <Card className="bg-white shadow-md rounded-lg overflow-hidden" style={{ height: '100%' }}>
                 <CardHeader>
-                  <img src={project.image || 'default-image-url.jpg'} alt={`Project ${index + 1}`} className="w-full h-56 object-cover" /> {/* Increased image height */}
+                  <img src={project.image || 'default-image-url.jpg'} alt={`Project ${index + 1}`} className="w-full h-56 object-cover" />
                   <CardTitle>{project.ProjectName}</CardTitle>
                 </CardHeader>
                 <CardContent className="truncate">
-                  <p>{project.Description.substring(0, 150)}...</p> {/* Displaying a longer overview */}
+                  <p>{project.Description.substring(0, 150)}...</p>
                 </CardContent>
                 <CardFooter className="flex justify-between items-center">
                   <span>Start Date: {new Date(project.StartDate).toLocaleDateString()}</span>

@@ -10,7 +10,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { useGetPartnersQuery } from '@/slices/partnersApiSlice';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { Loader } from 'lucide-react';
 
 const PartnersPage = () => {
@@ -23,7 +23,6 @@ const PartnersPage = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <Toaster />
       <motion.div
         className="text-center"
         initial={{ opacity: 0, y: -20 }}

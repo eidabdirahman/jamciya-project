@@ -4,7 +4,7 @@ import {
     useGetProjectsQuery, 
     useDeleteProjectMutation, 
     useCreateProjectMutation } from '../../slices/projectApiSlice.js';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button.jsx';
 import { 
     Table, 
@@ -66,7 +66,6 @@ const ProjectListScreen = () => {
 
   return (
     <div>
-      <Toaster />
       <h1>Projects</h1>
       <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '16px 0' }}>
         <Button onClick={createProjectHandler} variant="contained" color="blue">

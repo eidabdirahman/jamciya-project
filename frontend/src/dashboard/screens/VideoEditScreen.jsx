@@ -4,7 +4,7 @@ import {
   useGetVideoByIdQuery,
   useUpdateVideoMutation
 } from '../../slices/videoApiSlice.js';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button.jsx';
 import { Textarea } from '@/components/ui/textarea.jsx';
 import { Input } from '@/components/ui/input.jsx';
@@ -44,7 +44,6 @@ const VideoEditScreen = () => {
 
   return (
     <div>
-      <Toaster />
       <h1>Edit Video</h1>
       {isLoading || loadingUpdate ? (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>

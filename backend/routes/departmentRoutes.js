@@ -12,12 +12,12 @@ import upload from '../middlewares/uploadImageMiddleware.js';
 const router = express.Router();
 
 router.route('/')
-  .get(getDepartments)
-  .post(upload.single('Image'), createDepartment);
+  .get( getDepartments)
+  .post(authenticate, admin, upload.single('Image'), createDepartment);
 
 router.route('/:id')
-  .get(getDepartmentById)
-  .put(upload.single('Image'), updateDepartment)
-  .delete(deleteDepartment);
+  .get(authenticate, getDepartmentById)
+  .put(authenticate, admin, upload.single('Image'), updateDepartment)
+  .delete(authenticate, admin, deleteDepartment);
 
 export default router;

@@ -10,12 +10,12 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { useGetBlogsQuery } from '@/slices/blogsApiSlice';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { Loader } from 'lucide-react';
 
 const BlogsPage = () => {
   const { data: blogs, isLoading, error } = useGetBlogsQuery();
-
+     
   if (error) {
     toast.error("Error loading blogs");
     console.error("Error loading blogs:", error);
@@ -23,7 +23,6 @@ const BlogsPage = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <Toaster />
       <motion.div
         className="text-center"
         initial={{ opacity: 0, y: -20 }}
@@ -48,14 +47,14 @@ const BlogsPage = () => {
             >
               <Card className="bg-white shadow-md rounded-lg overflow-hidden">
                 <CardHeader>
-                  <img src={blog.image } alt={blog.Title} className="w-full h-40 object-cover" />
+                  <img src={blog.image || 'default-image-url.jpg'} alt={blog.Title} className="w-full h-40 object-cover" />
                   <CardTitle className="truncate">{blog.Title}</CardTitle>
                   <CardDescription className="truncate">
-                    {blog.Content}
+                    {blog.Content.substring(0, 100)}...
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p>{blog.Content.substring(0, 100)}...</p> {/* Displaying a brief overview */}
+                  <p>{blog.Content.substring(0, 150)}...</p> {/* Displaying a brief overview */}
                 </CardContent>
                 <CardFooter className="flex justify-between items-center">
                   <span>Published on: {new Date(blog.PublishedAt).toLocaleDateString()}</span>

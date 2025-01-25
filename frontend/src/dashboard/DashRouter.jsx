@@ -1,16 +1,26 @@
-import { Outlet,  } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { setCredentials } from '@/slices/authSlice';
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 
 const DashRouter = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.userInfo);
 
-//   useEffect(() => {
-//     if (!user) {
-//       navigate('/signin');
-//     } else if (user.role !== Role.ADMIN) {
-//       navigate('/profile');
-//     }
-//   }, [user, navigate]);
+  useEffect(() => {
+    if (!user) {
+      navigate('/signin');
+    } else {
+      dispatch(setCredentials(user));
+      if (user.role === "admin" || user.role === "superadmin") {
+        navigate('/dashboard');
+      }
+    }
+  }, [user, navigate, dispatch]);
 
   return (
     <div className="flex w-full h-full min-h-screen bg-gray-50">

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Menu, X } from "lucide-react";
 import logo from "../public/logo.jpeg";
 
@@ -8,6 +9,8 @@ const Header = () => {
   const pathname = useLocation().pathname;
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const { userInfo } = useSelector((state) => state.auth);
 
   const menuItems = [
     { title: 'Home', href: '/' },
@@ -30,10 +33,10 @@ const Header = () => {
     <nav className="bg-white border-b shadow-sm fixed top-0 w-full z-50">
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
         <Logo />
-        <DesktopNav items={menuItems} pathname={pathname} />
+        <DesktopNav items={menuItems} pathname={pathname} userInfo={userInfo} />
         <MobileMenuButton isOpen={dropdownOpen} toggleMenu={toggleMenu} />
       </div>
-      {dropdownOpen && <MobileNav items={menuItems} pathname={pathname} onItemSelect={handleItemClick} />}
+      {dropdownOpen && <MobileNav items={menuItems} pathname={pathname} onItemSelect={handleItemClick} userInfo={userInfo} />}
     </nav>
   );
 };
@@ -55,7 +58,7 @@ const Logo = () => (
 );
 
 // Desktop Navigation Component
-const DesktopNav = ({ items, pathname }) => (
+const DesktopNav = ({ items, pathname, userInfo }) => (
   <div className="hidden md:flex space-x-6 items-center">
     {items.map((item) => (
       <Link
@@ -66,12 +69,21 @@ const DesktopNav = ({ items, pathname }) => (
         {item.title}
       </Link>
     ))}
-    <Link
-      to="/login"
-      className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200 ml-6"
-    >
-      Signin
-    </Link>
+    {userInfo ? (
+      <Link
+        to="/dashboard"
+        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200 ml-6"
+      >
+        Dashboard
+      </Link>
+    ) : (
+      <Link
+        to="/signin"
+        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200 ml-6"
+      >
+        Signin
+      </Link>
+    )}
   </div>
 );
 
@@ -85,7 +97,7 @@ const MobileMenuButton = ({ isOpen, toggleMenu }) => (
 );
 
 // Mobile Navigation Component
-const MobileNav = ({ items, pathname, onItemSelect }) => (
+const MobileNav = ({ items, pathname, onItemSelect, userInfo }) => (
   <div className="md:hidden bg-white shadow-md">
     <div className="container mx-auto px-4 py-2">
       <div className="flex flex-col space-y-4">
@@ -98,12 +110,21 @@ const MobileNav = ({ items, pathname, onItemSelect }) => (
             {item.title}
           </button>
         ))}
-        <button
-          onClick={() => onItemSelect('/login')}
-          className="font-light rounded-full bg-primary text-white hover:bg-green-700"
-        >
-          Signin
-        </button>
+        {userInfo ? (
+          <button
+            onClick={() => onItemSelect('/dashboard')}
+            className="font-light rounded-full bg-blue-500 text-white hover:bg-blue-700"
+          >
+            Dashboard
+          </button>
+        ) : (
+          <button
+            onClick={() => onItemSelect('/signin')}
+            className="font-light rounded-full bg-primary text-white hover:bg-green-700"
+          >
+            Signin
+          </button>
+        )}
       </div>
     </div>
   </div>

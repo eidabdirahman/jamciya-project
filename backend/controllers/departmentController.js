@@ -13,10 +13,10 @@ const createDepartment = asyncHandler(async (req, res) => {
   const Image = req.file ? req.file.path : '';
 
   const department = new Department({
-    DepartmentName,
-    DepartmentHead,
-    Description,
-    Image,
+    DepartmentName : 'software Engineering',
+    DepartmentHead : 'Eid Abdirahman',
+    Description : 'this is the deparment description ',
+    Image : 'mohamed.jpeg',
     CreatedAt: new Date(),
   });
   

@@ -22,23 +22,13 @@ export const departmentsApiSlice = apiSlice.injectEndpoints({
     }),
     
     createDepartment: builder.mutation({
-      query: (data) => {
-        const formData = new FormData();
-        formData.append('DepartmentName', data.DepartmentName);
-        formData.append('DepartmentHead', data.DepartmentHead);
-        formData.append('Description', data.Description);
-        if (data.Image) {
-          formData.append('Image', data.Image);
-        }
-
-        return {
-          url: DEPARTMENTS_URL,
-          method: 'POST',
-          body: formData,
-        };
-      },
-      keepUnusedDataFor: 5,
-      invalidatesTags: ['Department'],
+      query: (data) => ({
+              url: DEPARTMENTS_URL,
+              method: 'POST',
+              body: data,
+            }),
+            keepUnusedDataFor: 5,
+            invalidatesTags: ['Department'],
     }),
     
     updateDepartment: builder.mutation({

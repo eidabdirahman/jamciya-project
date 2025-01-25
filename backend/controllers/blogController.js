@@ -13,10 +13,10 @@ const createBlog = asyncHandler(async (req, res) => {
   const image = req.file ? `/uploads/${req.file.filename}` : '';
 
   const blog = new Blog({
-    Title,
-    Content,
+    Title : 'development',
+    Content : 'Lorem ipsum odor amet, consectetuer adipiscing elit. Sem molestie',
+    image: 'development.jpg',
     publishedDate: new Date(publishedDate),
-    image,
   });
 
   const createdBlog = await blog.save();

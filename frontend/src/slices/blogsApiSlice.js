@@ -22,27 +22,19 @@ export const blogsApiSlice = apiSlice.injectEndpoints({
     }),
     createBlog: builder.mutation({
       query: (data) => {
-        const formData = new FormData();
-        formData.append('title', data.title);
-        formData.append('content', data.content);
-        formData.append('publishedDate', data.publishedDate);
-        if (data.image) {
-          formData.append('image', data.image);
-        }
-
         return {
           url: BLOGS_URL,
           method: 'POST',
-          body: formData,
+          body: data,
         };
       },
       keepUnusedDataFor: 5,
       invalidatesTags: ['Blog'],
     }),
     updateBlog: builder.mutation({
-      query: ({ id, title, content, publishedDate, image }) => {
+      query: ({ id, Title, content, publishedDate, image }) => {
         const formData = new FormData();
-        formData.append('title', title);
+        formData.append('Title', Title);
         formData.append('content', content);
         formData.append('publishedDate', publishedDate);
         if (image) {

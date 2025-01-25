@@ -13,11 +13,11 @@ const router = express.Router();
 
 router.route('/')
   .get(getBlogs)
-  .post(upload.single('image'), createBlog); 
+  .post(authenticate, admin, upload.single('image'), createBlog); 
 
 router.route('/:id')
   .get(getBlogById)
-  .put(upload.single('image'), updateBlog) 
-  .delete(deleteBlog);
+  .put(authenticate, admin, upload.single('image'), updateBlog) 
+  .delete(authenticate, admin, deleteBlog);
 
 export default router;

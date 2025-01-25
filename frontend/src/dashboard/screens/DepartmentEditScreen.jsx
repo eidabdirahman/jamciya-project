@@ -4,7 +4,7 @@ import {
   useGetDepartmentByIdQuery, 
   useUpdateDepartmentMutation 
 } from '../../slices/departmentsApiSlice';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Loader } from 'lucide-react';
@@ -53,7 +53,6 @@ const DepartmentEditScreen = () => {
 
   return (
     <div>
-      <Toaster />
       <h1>Edit Department</h1>
       {isLoading || loadingUpdate ? (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>

@@ -1,26 +1,32 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom';
-import Header from './Pages/components/Header';
-import Footer from './Pages/components/Footer';
-import About from './pages/components/About/About';
-import MainHome from './Pages/components/MainHome';
-import NotFound from './Pages/NotFound/NotFound';
-import Departmentpage from './pages/components/departments/Departmentpage';
-import Memberpage from './pages/components/member/Memberpage';
-import BlogsPag from './pages/components/Blogs/Blogspage';
-import ProjectPage from './pages/components/Projects/Projectspage';
-import DashRouter from './dashboard/DashRouter';
-import LoginPage from './dashboard/LoginPage';
-import ProfileScreen from './dashboard/screens/ProfileScreen';
-import BlogListScreen from './dashboard/screens/BlogListScreen';
-import BlogEditScreen from './dashboard/screens/BlogEditScreen';
-import DepartmentListScreen from './dashboard/screens/DepartmentListScreen';
-import DepartmentEditScreen from './dashboard/screens/DepartmentEditScreen';
-import ProjectListScreen from './dashboard/screens/ProjectListScreen';
-import ProjectEditScreen from './dashboard/screens/ProjectEditScreen';
-import PartnerListScreen from './dashboard/screens/PartnerListScreen';
-import PartnerEditScreen from './dashboard/screens/PartnerEditScreen';
-import VideoListScreen from './dashboard/screens/VideoListScreen';
-import VideoEditScreen from './dashboard/screens/VideoEditScreen';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import MainHome from '@/components/Mainhome';
+import About from '@/pages/About/About';
+import ContactPage from '@/pages/Contact/ContactPage';
+import NotFound from '@/Pages/NotFound/NotFound';
+import Departmentpage from '@/pages/departments/Departmentpage';
+import DepartmentDetailPage from '@/pages/departments/DepartmentDetailPage';
+import Memberpage from '@/pages/member/Memberpage';
+import BlogsPag from '@/pages/Blogs/Blogspage';
+import BlogDetailPage from '@/pages/Blogs/BlogDetailPage';
+import ProjectPage from '@/pages/Projects/Projectspage';
+import ProjectDetailPage from '@/pages/Projects/ProjectDetailPage';
+import DashRouter from '@/dashboard/DashRouter';
+import LoginPage from '@/pages/LoginPage';
+import ProfileScreen from '@/dashboard/screens/ProfileScreen';
+import BlogListScreen from '@/dashboard/screens/BlogListScreen';
+import BlogEditScreen from '@/dashboard/screens/BlogEditScreen';
+import DepartmentListScreen from '@/dashboard/screens/DepartmentListScreen';
+import DepartmentEditScreen from '@/dashboard/screens/DepartmentEditScreen';
+import ProjectListScreen from '@/dashboard/screens/ProjectListScreen';
+import ProjectEditScreen from '@/dashboard/screens/ProjectEditScreen';
+import PartnerListScreen from '@/dashboard/screens/PartnerListScreen';
+import PartnerEditScreen from '@/dashboard/screens/PartnerEditScreen';
+import VideoListScreen from '@/dashboard/screens/VideoListScreen';
+import VideoEditScreen from '@/dashboard/screens/VideoEditScreen';
+import UsersListScreen from '@/dashboard/screens/UsersListScreen';
+import UserEditScreen from '@/dashboard/screens/UserEditScreen';
 
 // Layout component
 const Layout = () => {
@@ -30,7 +36,7 @@ const Layout = () => {
       <Header />
 
       {/* Content Area - Avoids Overlap with Fixed Header */}
-      <div className="flex-grow mt-16">
+      <div className="flex-grow mt-20">
         <Outlet />
       </div>
 
@@ -51,11 +57,14 @@ export const router = createBrowserRouter([
       { path: '/', element: <MainHome /> },
       { path: 'about', element: <About /> },
       { path: 'departments', element: < Departmentpage/> },
+      { path: 'department/:id', element: < DepartmentDetailPage/> },
       { path: 'projects', element: <ProjectPage/> },
+      { path: 'project/:id', element: <ProjectDetailPage/> },
       { path: 'blogs', element: <BlogsPag/> },
+      { path: 'blog/:id', element: <BlogDetailPage/> },
       { path: 'member', element: <Memberpage/> },
-      { path: 'contact', element: <div>Contact Page</div> },
-      { path: 'login', element: <LoginPage /> },  // Moved here
+      { path: 'contact', element: <ContactPage/> },
+      { path: 'signin', element: <LoginPage /> },
       { path: '*', element: <NotFound /> },
     ],
   },
@@ -76,6 +85,8 @@ export const router = createBrowserRouter([
       { path: 'partners/:id/edit', element: <PartnerEditScreen /> },
       { path: 'videos', element: <VideoListScreen/> },
       { path: 'videos/:id/edit', element: <VideoEditScreen/> },
+      { path: 'users', element: <UsersListScreen/> },
+      { path: 'users/:id/edit', element: <UserEditScreen/> },
 
     ],
   },

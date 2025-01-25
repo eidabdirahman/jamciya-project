@@ -11,7 +11,7 @@ import { authenticate, admin } from '../middlewares/authenticate.js';
 const router = express.Router();
 
 router.route('/')
-    .get(authenticate, getNews)
+    .get(getNews)
     .post(authenticate, admin, createNews);
 
 router.route('/:id')

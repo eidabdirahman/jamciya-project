@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { 
   useGetProjectByIdQuery, 
   useUpdateProjectMutation } from '../../slices/projectApiSlice.js';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button.jsx';
 import { Textarea } from '@/components/ui/textarea.jsx';
 import { Input } from '@/components/ui/input.jsx';
@@ -48,7 +48,6 @@ const ProjectEditScreen = () => {
 
   return (
     <div>
-      <Toaster />
       <h1>Edit Project</h1>
       {isLoading || loadingUpdate ? (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
@@ -124,3 +123,4 @@ const ProjectEditScreen = () => {
 };
 
 export default ProjectEditScreen;
+        

@@ -4,7 +4,7 @@ import {
     useGetDepartmentsQuery, 
     useDeleteDepartmentMutation, 
     useCreateDepartmentMutation } from '../../slices/departmentsApiSlice';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/ui/table';
 
@@ -42,7 +42,6 @@ const DepartmentListScreen = () => {
 
   return (
     <div>
-      <Toaster />
       <h1>Departments</h1>
       <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '16px 0' }}>
         <Button onClick={createDepartmentHandler} variant="contained" color="blue">

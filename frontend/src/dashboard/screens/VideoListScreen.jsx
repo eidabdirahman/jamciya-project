@@ -1,7 +1,10 @@
 import { Edit, Trash, Loader } from 'lucide-react'; 
 import { useNavigate } from 'react-router-dom';
-import { useGetVideosQuery, useDeleteVideoMutation, useCreateVideoMutation } from '../../slices/videoApiSlice.js';
-import toast, { Toaster } from 'react-hot-toast';
+import { 
+  useGetVideosQuery,
+  useDeleteVideoMutation, 
+  useCreateVideoMutation } from '../../slices/videoApiSlice.js';
+  import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button.jsx';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/ui/table.jsx';
 
@@ -39,7 +42,6 @@ const VideoListScreen = () => {
 
   return (
     <div>
-      <Toaster />
       <h1>Videos</h1>
       <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '16px 0' }}>
         <Button onClick={createVideoHandler} variant="contained" color="blue">

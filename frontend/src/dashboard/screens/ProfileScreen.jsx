@@ -1,15 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Form } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-// import Message from '../Message';
 import { Loader } from 'lucide-react';
-import { useProfileMutation } from '../../slices/usersApiSlice';
-import { setCredentials } from '../../slices/authSlice';
-// import { Link } from 'react-router-dom';
+import { useProfileMutation } from '@/slices/usersApiSlice';
+import { setCredentials } from '@/slices/authSlice';
 
 const ProfileScreen = () => {
   const [name, setName] = useState('');
@@ -23,6 +20,7 @@ const ProfileScreen = () => {
     useProfileMutation();
 
   useEffect(() => {
+    console.log("User info:", userInfo);
     if (userInfo) {
       setName(userInfo.name);
       setEmail(userInfo.email);
@@ -36,6 +34,7 @@ const ProfileScreen = () => {
       toast.error('Passwords do not match');
     } else {
       try {
+        console.log("Updating profile with:", { name, email, password });
         const res = await updateProfile({
           name,
           email,
@@ -44,6 +43,7 @@ const ProfileScreen = () => {
         dispatch(setCredentials({ ...res }));
         toast.success('Profile updated successfully');
       } catch (err) {
+        console.error(err);
         toast.error(err?.data?.message || err.error);
       }
     }
@@ -54,7 +54,7 @@ const ProfileScreen = () => {
       <div className="profile">
         <h2>User Profile</h2>
 
-        <Form onSubmit={submitHandler}>
+        <form onSubmit={submitHandler}>
           <Label>Name</Label>
           <Input
             type="text"
@@ -89,9 +89,8 @@ const ProfileScreen = () => {
 
           <Button type="submit">Update</Button>
           {loadingUpdateProfile && <Loader />}
-        </Form>
+        </form>
       </div>
-     
     </div>
   );
 };

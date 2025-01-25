@@ -11,15 +11,17 @@ import {
 import { authenticate, admin, superAdmin } from '../middlewares/authenticate.js';
 
 const router = express.Router();
+
 router.post('/login', authUser);
-router.post('/logout', logoutUser);
+router.post('/logout', authenticate, logoutUser);
+
 router.route('/')
-    .get(authenticate, admin,  getUsers)
+    .get(getUsers)
     .post(authenticate, admin, createUser);
 
 router.route('/:id')
     .get(authenticate, getUserById)
     .put(authenticate, admin, updateUser)
-    .delete(authenticate,  superAdmin, deleteUser);
+    .delete(authenticate, superAdmin, deleteUser);
 
 export default router;
