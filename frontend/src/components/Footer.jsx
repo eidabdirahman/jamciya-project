@@ -33,10 +33,10 @@ const Footer = () => {
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <h3 className="text-lg font-semibold mb-4">MENU</h3>
             <ul className="space-y-2">
-              <li><Link to="/materials" className="hover:text-green-400">Materials</Link></li>
-              <li><Link to="/blogs" className="hover:text-green-400">Blogs</Link></li>
-              <li><Link to="/about" className="hover:text-green-400">About us</Link></li>
-              <li><Link to="/contact" className="hover:text-green-400">Contact us</Link></li>
+              <li><Link to="/blogs" className="hover:text-blue-700">Blogs</Link></li>
+              <li><Link to="/projects" className="hover:text-blue-700">Our Projects</Link></li>
+              <li><Link to="/about" className="hover:text-blue-700">About us</Link></li>
+              <li><Link to="/contact" className="hover:text-blue-700">Contact us</Link></li>
             </ul>
           </div>
 
@@ -91,8 +91,9 @@ const Footer = () => {
 
         {/* Bottom Line */}
         <div className="mt-8 text-center border-t pt-4 text-sm">
-          <p>&copy; 2025 jam'iyyah. All Rights Reserved.</p>
-        </div>
+  <p>&copy; {new Date().getFullYear()} jam'iyyah. All Rights Reserved.</p>
+</div>
+
       </div>
     </footer>
   );

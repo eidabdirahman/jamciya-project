@@ -6,7 +6,7 @@ import {
     updateAchievement,
     deleteAchievement
 } from '../controllers/achievementController.js';
-import { authenticate, admin } from '../middlewares/authenticate.js';
+import { authenticate, admin, superAdmin } from '../middlewares/authenticate.js';
 
 const router = express.Router();
 

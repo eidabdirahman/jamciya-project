@@ -7,7 +7,14 @@ import {
 import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button.jsx';
 import { Input } from '@/components/ui/input.jsx';
-import { Select } from '@/components/ui/select.jsx'; // Assuming you have a Select component
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import { Loader } from 'lucide-react';
 
 const UserEditScreen = () => {
@@ -16,7 +23,6 @@ const UserEditScreen = () => {
 
   const { data: user, isLoading, error } = useGetUserDetailsQuery(userId);
   const [updateUser , { isLoading: loadingUpdate }] = useUpdateUserMutation();
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [role, setRole] = useState(''); // State for user role
@@ -85,15 +91,14 @@ const UserEditScreen = () => {
           </div>
           <div>
             <label htmlFor="role">Role</label>
-            <Select
-              id="role"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              required
-            >
-              <option value="">Select Role</option>
-              <option value="admin">Admin</option>
-              <option value="superadmin">Super Admin</option>
+            <Select onValueChange={setRole} value={role}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select Role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="admin">Admin</SelectItem>
+                <SelectItem value="superadmin">Super Admin</SelectItem>
+              </SelectContent>
             </Select>
           </div>
           <div>

@@ -29,28 +29,27 @@ const getBlogById = asyncHandler(async (req, res) => {
   if (!blog) return res.status(404).json({ message: 'Blog not found' });
   res.status(200).json(blog);
 });
-
-// Update a blog
 const updateBlog = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { title, content, publishedDate } = req.body;
+  const { Title, Content, PublishedAt } = req.body;
   const image = req.file ? `/uploads/${req.file.filename}` : req.body.image;
 
-  // Ensure publishedDate is provided or set a default value
-  const publishedDateValue = publishedDate ? new Date(publishedDate) : new Date();
+  const publishedDateValue = PublishedAt ? new Date(PublishedAt) : new Date();
 
-  const updatedBlog = await Blog.findByIdAndUpdate(
-    id,
-    { 
-      Title: title, 
-      Content: content, 
-      PublishedAt: publishedDateValue, 
-      image 
-    },
-    { new: true }
-  );
+  // Find the blog by ID
+  const blog = await Blog.findById(id);
+  if (!blog) {
+    return res.status(404).json({ message: 'Blog not found' });
+  }
 
-  if (!updatedBlog) return res.status(404).json({ message: 'Blog not found' });
+  // Update the blog fields
+  blog.Title = Title || blog.Title;
+  blog.Content = Content || blog.Content;
+  blog.PublishedAt = publishedDateValue;
+  blog.image = image; // Update the image
+
+  // Save the updated blog
+  const updatedBlog = await blog.save();
   res.status(200).json(updatedBlog);
 });
 

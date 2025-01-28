@@ -6,12 +6,12 @@ import { getPartners,
     createPartner, 
     updatePartner, 
     deletePartner } from '../controllers/PartnerControllers.js';
-import { authenticate, admin } from '../middlewares/authenticate.js';
-import upload from '../middlewares/uploadMiddleware.js';
+import { authenticate, admin, superAdmin } from '../middlewares/authenticate.js';
+import upload from '../middlewares/uploadImageMiddleware.js';
 
 router.route('/')
   .get(getPartners)
-  .post(authenticate, admin, upload.single('image'), createPartner);
+  .post(authenticate, admin, createPartner);
 
 router.route('/:id')
   .get(authenticate, getPartnerById)

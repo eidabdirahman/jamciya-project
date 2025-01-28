@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { 
   useGetBlogByIdQuery, 
-  useUpdateBlogMutation } from '../../slices/blogsApiSlice.js';
+  useUpdateBlogMutation 
+} from '../../slices/blogsApiSlice.js';
 import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button.jsx';
 import { Textarea } from '@/components/ui/textarea.jsx';
@@ -26,10 +27,9 @@ const BlogEditScreen = () => {
       setTitle(blog.Title);
       setContent(blog.Content);
       setPublishedDate(blog.PublishedAt);
-      setImage(null); // Reset image input
+      setImage(null);
     }
   }, [blog]);
-
   const submitHandler = async (e) => {
     e.preventDefault();
     if (window.confirm('Are you sure you want to update this blog?')) {
@@ -38,11 +38,14 @@ const BlogEditScreen = () => {
         formData.append('title', title);
         formData.append('content', content);
         formData.append('publishedDate', publishedDate);
+  
         if (image) {
           formData.append('image', image);
+        } else {
+          formData.append('image', blog.image); // Ensure existing image is included
         }
   
-        await updateBlog({ id: blogId, title, content, publishedDate, image }).unwrap();
+        await updateBlog({ id: blogId, formData }).unwrap();
         toast.success('Blog updated successfully');
         navigate('/dashboard/blogs');
       } catch (err) {
@@ -51,6 +54,9 @@ const BlogEditScreen = () => {
     }
   };
   
+  
+  
+
   return (
     <div>
       <h1>Edit Blog</h1>

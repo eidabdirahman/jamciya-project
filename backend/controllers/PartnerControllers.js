@@ -1,8 +1,8 @@
-// controllers/partnerController.js
 import asyncHandler from 'express-async-handler';
 import Partner from '../models/PartnerModal.js';
 import fs from 'fs';
 import path from 'path';
+import mongoose from 'mongoose'; // Add mongoose import
 
 // @desc    Get all partners
 // @route   GET /api/partners
@@ -28,7 +28,6 @@ const getPartnerById = asyncHandler(async (req, res) => {
 // @desc    Create a new partner
 // @route   POST /api/partners
 // @access  Private/Admin
-//create partner
 const createPartner = asyncHandler(async (req, res) => {
   const { name, description, website } = req.body;
   const image = req.file ? `/uploads/${req.file.filename}` : '';
@@ -44,13 +43,21 @@ const createPartner = asyncHandler(async (req, res) => {
   res.status(201).json(createdPartner);
 });
 
-
 // @desc    Update a partner
 // @route   PUT /api/partners/:id
 // @access  Private/Admin
 const updatePartner = asyncHandler(async (req, res) => {
   const { name, description, website } = req.body;
   const image = req.file ? req.file.path : null;
+
+  // Log the received id
+  console.log('Received partner ID:', req.params.id);
+
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.status(400).json({ message: 'Invalid partner ID' });
+    console.error('Invalid partner ID:', req.params.id); // Debugging line
+    return;
+  }
 
   const partner = await Partner.findById(req.params.id);
 
@@ -74,6 +81,7 @@ const updatePartner = asyncHandler(async (req, res) => {
     throw new Error('Partner not found');
   }
 });
+
 
 // @desc    Delete a partner
 // @route   DELETE /api/partners/:id

@@ -42,10 +42,10 @@ const createUser = asyncHandler(async (req, res) => {
     }
 
     const user = await User.create({
-        name,
-        email,
-        password,
-        role
+        name : 'new user',
+        email : 'newuser@gmail.com',
+        password : '123',
+        role: 'admin'
     });
 
     if (user) {

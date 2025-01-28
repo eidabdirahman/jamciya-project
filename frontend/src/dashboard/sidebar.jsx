@@ -18,7 +18,7 @@ export default function Sidebar() {
     }
   }, [userInfo, navigate, dispatch]);
 
-  const menuItems = [
+  const superAdminMenuItems = [
     { icon: Home, label: 'Home', path: '/', isActive: pathname === '/' },
     { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard', isActive: pathname === '/dashboard' },
     { icon: FileText, label: 'Blogs', path: '/dashboard/blogs', isActive: pathname === '/dashboard/blogs' },
@@ -27,8 +27,16 @@ export default function Sidebar() {
     { icon: Building, label: 'Departments', path: '/dashboard/departments', isActive: pathname === '/dashboard/departments' },
     { icon: Video, label: 'Videos Gallery', path: '/dashboard/videos', isActive: pathname === '/dashboard/videos' },
     { icon: Image, label: 'Photo Gallery', path: '/dashboard/photo-gallery', isActive: pathname === '/dashboard/photo-gallery' },
-    { icon: User, label: 'Users', path: '/dashboard/users', isActive: pathname === '/dashboard/users' },
+    { icon: User, label: 'Users', path: '/dashboard/users', isActive: pathname === '/dashboard/users' }
   ];
+
+  const adminMenuItems = [
+    { icon: Home, label: 'Home', path: '/', isActive: pathname === '/' },
+    { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard', isActive: pathname === '/dashboard' },
+    { icon: FileText, label: 'Blogs', path: '/dashboard/blogs', isActive: pathname === '/dashboard/blogs' }
+  ];
+
+  const menuItems = userInfo?.role === 'superadmin' ? superAdminMenuItems : adminMenuItems;
 
   return (
     <div className="bg-white transition-all duration-300 ease-in-out w-72 px-0 shadow-lg flex flex-col">

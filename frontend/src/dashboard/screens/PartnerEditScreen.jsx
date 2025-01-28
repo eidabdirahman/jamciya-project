@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  useGetPartnerByIdQuery,
-  useUpdatePartnerMutation
-} from '../../slices/partnersApiSlice.js';
+import { useGetPartnerByIdQuery, useUpdatePartnerMutation } from '../../slices/partnersApiSlice.js';
 import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button.jsx';
 import { Textarea } from '@/components/ui/textarea.jsx';
 import { Input } from '@/components/ui/input.jsx';
 import { Loader } from 'lucide-react';
+import mongoose from 'mongoose'; // Import mongoose
 
 const PartnerEditScreen = () => {
   const { id: partnerId } = useParams();
   const navigate = useNavigate();
+
+  console.log('Partner ID from useParams:', partnerId); // Debugging line
 
   const { data: partner, isLoading, error } = useGetPartnerByIdQuery(partnerId);
   const [updatePartner, { isLoading: loadingUpdate }] = useUpdatePartnerMutation();
@@ -20,29 +20,63 @@ const PartnerEditScreen = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [website, setWebsite] = useState('');
-  const [image, setImage] = useState('');
+  const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
     if (partner) {
       setName(partner.name);
       setDescription(partner.description);
       setWebsite(partner.website);
-      setImage(partner.image);
+      // Assuming you have a way to fetch and display the image file
     }
+    console.log('Partner data fetched:', partner); // Debugging line
   }, [partner]);
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+    }
+    console.log('Image file selected:', file); // Debugging line
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
+  
+    // Debugging line to check partnerId
+    console.log('Validating partnerId:', partnerId);
+    
+    // Validate partner ID
+    if (!partnerId || !mongoose.Types.ObjectId.isValid(partnerId)) {
+      toast.error('Invalid partner ID');
+      console.error('Invalid partner ID:', partnerId); // Debugging line
+      return;
+    }
+  
+    // Debugging line to verify form data
+    console.log('Form submitted with:', { partnerId, name, description, website, imageFile });
+  
     if (window.confirm('Are you sure you want to update this partner?')) {
+      const formData = new FormData();
+      formData.append('id', partnerId);
+      formData.append('name', name);
+      formData.append('description', description);
+      formData.append('website', website);
+      if (imageFile) {
+        formData.append('image', imageFile);
+      }
+  
       try {
-        await updatePartner({ id: partnerId, name, description, website, image }).unwrap();
+        await updatePartner(formData).unwrap();
         toast.success('Partner updated successfully');
         navigate('/dashboard/partners');
       } catch (err) {
         toast.error(err?.data?.message || err.message || 'An error occurred while updating the partner');
+        console.error('Error updating partner:', err); // Debugging line
       }
     }
   };
+  
 
   return (
     <div>
@@ -85,12 +119,11 @@ const PartnerEditScreen = () => {
             />
           </div>
           <div>
-            <label htmlFor="image">Image URL</label>
+            <label htmlFor="image">Image File</label>
             <Input
               id="image"
-              type="text"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
+              type="file"
+              onChange={handleImageUpload}
               required
             />
           </div>

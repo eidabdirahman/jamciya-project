@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import {  toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Form } from '@/components/ui/form';
+// import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import emailjs from 'emailjs-com';
 
 const ContactPage = () => {
   const [name, setName] = useState('');
@@ -17,8 +18,7 @@ const ContactPage = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      // Simulate sending a message
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await emailjs.sendForm('service_490u6kr', 'template_o4cn6ni', e.target, 'BG_xYGaM9p4raH3ws');
       toast.success('Message sent successfully!');
       setName('');
       setEmail('');
@@ -40,7 +40,7 @@ const ContactPage = () => {
       <div className="w-full max-w-screen-xl bg-white rounded-lg shadow-md p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className="lg:col-span-6">
           <h1 className="text-3xl font-bold text-center lg:text-left mb-8">Contact Us</h1>
-          <Form onSubmit={submitHandler}>
+          <form onSubmit={submitHandler}>
             <div className="mb-4">
               <Label htmlFor="name">Name</Label>
               <Input
@@ -49,6 +49,7 @@ const ContactPage = () => {
                 placeholder="Your Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                name="user_name"
                 className="mt-2"
               />
             </div>
@@ -60,6 +61,7 @@ const ContactPage = () => {
                 placeholder="Your Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                name="user_email"
                 className="mt-2"
               />
             </div>
@@ -70,13 +72,14 @@ const ContactPage = () => {
                 placeholder="Your Message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
+                name="message"
                 className="mt-2"
               />
             </div>
             <Button type="submit" className="w-full py-2" disabled={isLoading}>
               {isLoading ? 'Sending...' : 'Send Message'}
             </Button>
-          </Form>
+          </form>
         </div>
 
         <div className="lg:col-span-6 flex flex-col justify-between">

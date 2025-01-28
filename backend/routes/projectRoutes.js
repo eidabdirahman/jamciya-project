@@ -6,7 +6,7 @@ import {
     updateProject,
     deleteProject
 } from '../controllers/projectController.js';
-import { authenticate, admin } from '../middlewares/authenticate.js';
+import { authenticate, admin, superAdmin } from '../middlewares/authenticate.js';
 
 const router = express.Router();
 
@@ -15,7 +15,7 @@ router.route('/')
     .post(authenticate, admin, createProject);
 
 router.route('/:id')
-    .get(authenticate, getProjectById)
+    .get( getProjectById)
     .put(authenticate, admin, updateProject)
     .delete(authenticate, admin, deleteProject);
 
