@@ -22,14 +22,14 @@ const ProjectPage = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <motion.div
-        className="text-center"
+      <motion.h1
+        className="text-3xl font-bold mb-4"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 1 }}
       >
-        <h1 className="text-3xl font-bold mb-4">Projects</h1>
-      </motion.div>
+       Projects
+      </motion.h1>
 
       {isLoading ? (
         <Loader />
