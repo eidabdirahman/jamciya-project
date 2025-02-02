@@ -8,7 +8,7 @@ import NotFound from './pages/NotFound/NotFound';
 import Departmentpage from './pages/departments/Departmentpage';
 import DepartmentDetailPage from './pages/departments/DepartmentDetailPage';
 import Memberpage from './pages/member/Memberpage';
-import BlogsPag from './pages/Blogs/Blogspage';
+import BlogsPage from './pages/Blogs/BlogsPage';
 import BlogDetailPage from './pages/Blogs/BlogDetailPage';
 import ProjectPage from './pages/Projects/Projectspage';
 import ProjectDetailPage from './pages/Projects/ProjectDetailPage';
@@ -60,7 +60,7 @@ export  const router = createBrowserRouter([
       { path: 'department/:id', element: < DepartmentDetailPage/> },
       { path: 'projects', element: <ProjectPage/> },
       { path: 'project/:id', element: <ProjectDetailPage/> },
-      { path: 'blogs', element: <BlogsPag/> },
+      { path: 'blogs', element: <BlogsPage/> },
       { path: 'blog/:id', element: <BlogDetailPage/> },
       { path: 'member', element: <Memberpage/> },
       { path: 'contact', element: <ContactPage/> },
