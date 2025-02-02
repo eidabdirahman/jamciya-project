@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { setCredentials } from '@/slices/authSlice';
 import Header from "./header";
-import Sidebar from "./Sidebar";
+import Sidebar from "./sidebar";
 
 const DashRouter = () => {
   const navigate = useNavigate();
