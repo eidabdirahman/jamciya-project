@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button.jsx';
 import { Textarea } from '@/components/ui/textarea.jsx';
 import { Input } from '@/components/ui/input.jsx';
 import { Loader } from 'lucide-react';
-import mongoose from 'mongoose'; // Import mongoose
 
 const PartnerEditScreen = () => {
   const { id: partnerId } = useParams();
