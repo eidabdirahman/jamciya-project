@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import MainHome from '@/components/Mainhome';
 import About from '@/pages/About/About';
 import ContactPage from '@/pages/Contact/ContactPage';
-import NotFound from '@/Pages/NotFound/NotFound';
+import NotFound from './pages/NotFound/NotFound';
 import Departmentpage from '@/pages/departments/Departmentpage';
 import DepartmentDetailPage from '@/pages/departments/DepartmentDetailPage';
 import Memberpage from '@/pages/member/Memberpage';
