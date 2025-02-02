@@ -45,12 +45,7 @@ const PartnerEditScreen = () => {
     // Debugging line to check partnerId
     console.log('Validating partnerId:', partnerId);
     
-    // Validate partner ID
-    if (!partnerId || !mongoose.Types.ObjectId.isValid(partnerId)) {
-      toast.error('Invalid partner ID');
-      console.error('Invalid partner ID:', partnerId); // Debugging line
-      return;
-    }
+   
   
     // Debugging line to verify form data
     console.log('Form submitted with:', { partnerId, name, description, website, imageFile });
