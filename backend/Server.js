@@ -28,7 +28,11 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors()); 
+app.use(cors({
+  origin: 'https://jamciya-project.vercel.app/', 
+  credentials: true,
+}));
+
 
 // Serve static files from the "uploads" directory
 const __dirname = path.resolve();
