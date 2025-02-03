@@ -9,9 +9,9 @@ const Users = [
     },
     {
         name: 'Eid Abdirahman',
-        email: 'EidAbdirahman@gmail.com',
+        email: 'Eid@gmail.com',
         password: bcrypt.hashSync('password123', 10),
-        role: "client"
+        role: "admin"
     },
     {
         name: 'Cosob Ahmed',
