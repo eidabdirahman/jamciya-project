@@ -1,9 +1,10 @@
 import express from 'express';
+import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import path from 'path';
 import cookieParser from 'cookie-parser';
-import cors from 'cors'; // Import CORS middleware
+import cors from 'cors'; 
 import ConnectDB from './Config/db.js';
 import departmentRoutes from './routes/departmentRoutes.js';
 import newsRoutes from './routes/newsRoutes.js';
@@ -31,9 +32,12 @@ app.use(cookieParser());
 app.use(cors());
 
 
+// Define __dirname in ES Module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // Serve static files from the "uploads" directory
-const __dirname = path.resolve();
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Root route handler
 app.get('/', (req, res) => {
