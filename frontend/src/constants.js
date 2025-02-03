@@ -1,4 +1,4 @@
-export const BASE_URL = '';
+export const BASE_URL = 'https://jamciya-project-serverside.vercel.app';
 export const BLOGS_URL = '/api/blogs';
 export const PROJECTS_URL = '/api/projects';
 export const PARTNERS_URL = '/api/partners';
