@@ -29,7 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors({
-  origin: 'https://jamciya-project.vercel.app/', 
+  origin: 'http://your-frontend-domain.com', // Replace with your frontend domain
   credentials: true,
 }));
 
