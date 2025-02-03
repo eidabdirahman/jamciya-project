@@ -98,7 +98,7 @@ const MobileMenuButton = ({ isOpen, toggleMenu }) => (
 
 // Mobile Navigation Component
 const MobileNav = ({ items, pathname, onItemSelect, userInfo }) => (
-  <div className={`md:hidden bg-white shadow-md ${dropdownOpen ? 'block' : 'hidden'}`}>
+  <div className="md:hidden bg-white shadow-md">
     <div className="container mx-auto px-4 py-2">
       <div className="flex flex-col space-y-4">
         {items.map((item) => (
@@ -120,7 +120,7 @@ const MobileNav = ({ items, pathname, onItemSelect, userInfo }) => (
         ) : (
           <button
             onClick={() => onItemSelect('/signin')}
-            className="font-light rounded-full bg-blue-500 text-white hover:bg-blue-700"
+            className="font-light rounded-full bg-primary text-white hover:bg-green-700"
           >
             Signin
           </button>
