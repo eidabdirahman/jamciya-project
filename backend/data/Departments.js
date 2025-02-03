@@ -3,13 +3,19 @@ const Departments = [
         DepartmentName: 'Engineering',
         DepartmentHead: 'John Doe',
         Description: 'Focuses on developing and maintaining engineering solutions.',
-        Image: 'https://example.com/images/engineering.jpg'
+        Image: '/images/5.jpeg',
     },
     {
         DepartmentName: 'Marketing',
         DepartmentHead: 'Jane Smith',
         Description: 'Responsible for market research, advertising, and promotions.',
-        Image: 'https://example.com/images/marketing.jpg'
+        Image: '/images/shImage2.jpeg',
+    },
+    {
+        DepartmentName: 'Marketing',
+        DepartmentHead: 'Jane Smith',
+        Description: 'Responsible for market research, advertising, and promotions.',
+        Image: '/images/5.jpeg',
     },
     // Add more departments here
 ];
