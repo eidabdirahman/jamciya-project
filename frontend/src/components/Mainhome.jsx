@@ -11,7 +11,7 @@ const Mainhome = () => {
     <div>
       {/* Metadata with react-helmet */}
       <Helmet>
-        <title>Welcome to Jamciya | Home</title>
+        <title>Welcome to Jamciya</title>
         <meta
           name="description"
           content="Explore Jamciya's latest blogs, projects, partners, photo gallery, and video gallery. Stay updated with our activities and collaborations."
