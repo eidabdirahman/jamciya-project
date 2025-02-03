@@ -12,7 +12,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/api/": "https://jamciya-project-serverside.vercel.app",
+      "/api/": "https://jamciya-project-serverside.vercel.app/",
     },
   },
 
