@@ -90,7 +90,7 @@ const DesktopNav = ({ items, pathname, userInfo }) => (
 // Mobile Menu Button Component
 const MobileMenuButton = ({ isOpen, toggleMenu }) => (
   <div className="md:hidden flex items-center">
-    <button onClick={toggleMenu} className="focus:outline-none">
+    <button onClick={toggleMenu} className="focus:outline-none" aria-label="Toggle menu">
       {isOpen ? <X className="w-6 h-6 text-gray-700" /> : <Menu className="w-6 h-6 text-gray-700" />}
     </button>
   </div>
@@ -98,7 +98,7 @@ const MobileMenuButton = ({ isOpen, toggleMenu }) => (
 
 // Mobile Navigation Component
 const MobileNav = ({ items, pathname, onItemSelect, userInfo }) => (
-  <div className={`md:hidden bg-white shadow-md ${dropdownOpen ? 'block' : 'hidden'}`}>
+  <div className={`md:hidden bg-white shadow-md transition-transform duration-300 ${dropdownOpen ? 'translate-y-0' : '-translate-y-full'}`}>
     <div className="container mx-auto px-4 py-2">
       <div className="flex flex-col space-y-4">
         {items.map((item) => (
@@ -129,4 +129,5 @@ const MobileNav = ({ items, pathname, onItemSelect, userInfo }) => (
     </div>
   </div>
 );
+
 export default Header;
