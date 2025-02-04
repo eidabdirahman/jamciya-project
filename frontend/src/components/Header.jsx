@@ -36,7 +36,15 @@ const Header = () => {
         <DesktopNav items={menuItems} pathname={pathname} userInfo={userInfo} />
         <MobileMenuButton isOpen={dropdownOpen} toggleMenu={toggleMenu} />
       </div>
-      {dropdownOpen && <MobileNav items={menuItems} pathname={pathname} onItemSelect={handleItemClick} userInfo={userInfo} />}
+      {dropdownOpen && (
+        <MobileNav
+          items={menuItems}
+          pathname={pathname}
+          onItemSelect={handleItemClick}
+          userInfo={userInfo}
+          dropdownOpen={dropdownOpen} // Pass dropdownOpen as a prop
+        />
+      )}
     </nav>
   );
 };
@@ -97,7 +105,7 @@ const MobileMenuButton = ({ isOpen, toggleMenu }) => (
 );
 
 // Mobile Navigation Component
-const MobileNav = ({ items, pathname, onItemSelect, userInfo }) => (
+const MobileNav = ({ items, pathname, onItemSelect, userInfo, dropdownOpen }) => (
   <div className={`md:hidden bg-white shadow-md transition-transform duration-300 ${dropdownOpen ? 'translate-y-0' : '-translate-y-full'}`}>
     <div className="container mx-auto px-4 py-2">
       <div className="flex flex-col space-y-4">
