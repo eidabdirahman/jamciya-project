@@ -53,18 +53,17 @@ const Header = () => {
   );
 };
 
-// Logo Component
+// Logo Component with Responsive Sizes
 const Logo = () => (
   <div className="flex-shrink-0 flex items-center">
     <Link to="/" className="flex items-center gap-2">
       <img
         src={logo}
-        width={70}
-        height={60}
+        className="w-16 h-12 md:w-20 md:h-16" // Responsive classes for logo
         alt="logo"
         loading="lazy"
       />
-      <p className="text-xl font-bold text-blue-500">Jam’iyyah Al-Quran wa-Sunnah</p>
+      <p className="text-sm md:text-xl font-bold text-blue-500">Jam’iyyah Al-Quran wa-Sunnah</p> {/* Responsive classes for text */}
     </Link>
   </div>
 );
