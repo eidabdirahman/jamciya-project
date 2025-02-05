@@ -22,11 +22,15 @@ const Header = () => {
     { title: 'Contact Us', href: '/contact' },
   ];
 
-  const toggleMenu = () => setDropdownOpen(!dropdownOpen);
+  const toggleMenu = () => {
+    setDropdownOpen(!dropdownOpen);
+    console.log(`Dropdown is now ${dropdownOpen ? 'closed' : 'open'}`);
+  };
 
   const handleItemClick = (href) => {
     setDropdownOpen(false);
     navigate(href);
+    console.log(`Navigated to ${href}`);
   };
 
   return (
