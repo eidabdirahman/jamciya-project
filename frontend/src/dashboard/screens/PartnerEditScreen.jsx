@@ -11,8 +11,6 @@ const PartnerEditScreen = () => {
   const { id: partnerId } = useParams();
   const navigate = useNavigate();
 
-  console.log('Partner ID from useParams:', partnerId); // Debugging line
-
   const { data: partner, isLoading, error } = useGetPartnerByIdQuery(partnerId);
   const [updatePartner, { isLoading: loadingUpdate }] = useUpdatePartnerMutation();
 
@@ -26,9 +24,7 @@ const PartnerEditScreen = () => {
       setName(partner.name);
       setDescription(partner.description);
       setWebsite(partner.website);
-      // Assuming you have a way to fetch and display the image file
     }
-    console.log('Partner data fetched:', partner); // Debugging line
   }, [partner]);
 
   const handleImageUpload = (e) => {
@@ -36,20 +32,10 @@ const PartnerEditScreen = () => {
     if (file) {
       setImageFile(file);
     }
-    console.log('Image file selected:', file); // Debugging line
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
-  
-    // Debugging line to check partnerId
-    console.log('Validating partnerId:', partnerId);
-    
-   
-  
-    // Debugging line to verify form data
-    console.log('Form submitted with:', { partnerId, name, description, website, imageFile });
-  
     if (window.confirm('Are you sure you want to update this partner?')) {
       const formData = new FormData();
       formData.append('id', partnerId);
@@ -59,69 +45,71 @@ const PartnerEditScreen = () => {
       if (imageFile) {
         formData.append('image', imageFile);
       }
-  
+
       try {
         await updatePartner(formData).unwrap();
         toast.success('Partner updated successfully');
         navigate('/dashboard/partners');
       } catch (err) {
         toast.error(err?.data?.message || err.message || 'An error occurred while updating the partner');
-        console.error('Error updating partner:', err); // Debugging line
       }
     }
   };
-  
 
   return (
-    <div>
-      <h1>Edit Partner</h1>
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <h1 className="text-2xl font-bold mb-4">Edit Partner</h1>
       {isLoading || loadingUpdate ? (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-          <Loader size={48} color="gray" className="spinner" />
+        <div className="flex justify-center items-center h-48">
+          <Loader size={48} className="animate-spin mx-auto text-gray-700" />
         </div>
       ) : error ? (
-        <div style={{ color: 'red' }}>{error.data.message}</div>
+        <div className="text-red-500 text-center">{error.data.message}</div>
       ) : (
-        <form onSubmit={submitHandler}>
-          <div>
-            <label htmlFor="name">Name</label>
+        <form onSubmit={submitHandler} className="space-y-6 bg-white p-8 rounded-lg shadow-md">
+          <div className="flex flex-col">
+            <label htmlFor="name" className="text-lg font-medium text-gray-700">Name</label>
             <Input
               id="name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
+              className="mt-2 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div>
-            <label htmlFor="description">Description</label>
+          <div className="flex flex-col">
+            <label htmlFor="description" className="text-lg font-medium text-gray-700">Description</label>
             <Textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
+              className="mt-2 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div>
-            <label htmlFor="website">Website</label>
+          <div className="flex flex-col">
+            <label htmlFor="website" className="text-lg font-medium text-gray-700">Website</label>
             <Input
               id="website"
               type="text"
               value={website}
               onChange={(e) => setWebsite(e.target.value)}
               required
+              className="mt-2 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div>
-            <label htmlFor="image">Image File</label>
+          <div className="flex flex-col">
+            <label htmlFor="image" className="text-lg font-medium text-gray-700">Image File</label>
             <Input
               id="image"
               type="file"
               onChange={handleImageUpload}
               required
+              className="mt-2 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <Button type="submit" variant="contained" color="primary">
+          <Button type="submit" variant="contained" color="primary" className="w-full mt-6 py-3 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition duration-300">
             Update Partner
           </Button>
         </form>

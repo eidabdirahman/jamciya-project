@@ -43,46 +43,49 @@ const VideoEditScreen = () => {
   };
 
   return (
-    <div>
-      <h1>Edit Video</h1>
+    <div className="container mx-auto p-6 bg-gradient-to-r from-blue-50 via-green-50 to-yellow-50 rounded-lg shadow-lg">
+      <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">Edit Video</h1>
       {isLoading || loadingUpdate ? (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+        <div className="flex justify-center items-center h-48">
           <Loader size={48} color="gray" className="spinner" />
         </div>
       ) : error ? (
-        <div style={{ color: 'red' }}>{error.data.message}</div>
+        <div className="text-red-600 text-center">{error.data.message}</div>
       ) : (
-        <form onSubmit={submitHandler}>
-          <div>
-            <label htmlFor="title">Title</label>
+        <form onSubmit={submitHandler} className="space-y-6 bg-white p-8 rounded-lg shadow-md">
+          <div className="flex flex-col">
+            <label htmlFor="title" className="text-lg font-medium text-gray-700">Title</label>
             <Input
               id="title"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
+              className="mt-2 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div>
-            <label htmlFor="description">Description</label>
+          <div className="flex flex-col">
+            <label htmlFor="description" className="text-lg font-medium text-gray-700">Description</label>
             <Textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
+              className="mt-2 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div>
-            <label htmlFor="videoId">Video ID</label>
+          <div className="flex flex-col">
+            <label htmlFor="videoId" className="text-lg font-medium text-gray-700">Video ID</label>
             <Input
               id="videoId"
               type="text"
               value={videoIdInput}
               onChange={(e) => setVideoIdInput(e.target.value)}
               required
+              className="mt-2 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <Button type="submit" variant="contained" color="primary">
+          <Button type="submit" variant="contained" color="primary" className="w-full mt-6 py-3 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition duration-300">
             Update Video
           </Button>
         </form>

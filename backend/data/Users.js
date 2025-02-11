@@ -5,7 +5,7 @@ const Users = [
         name: 'Admin user',
         email: 'admin@example.com',
         password: bcrypt.hashSync('password123', 10),
-        role: 'admin'
+        role: 'superadmin'
     },
     {
         name: 'Eid Abdirahman',
@@ -17,7 +17,7 @@ const Users = [
         name: 'Cosob Ahmed',
         email: 'cosobahmed@gmail.com',
         password: bcrypt.hashSync('password123', 10),
-        role: "client"
+        role: "admin"
     },
 ]
 

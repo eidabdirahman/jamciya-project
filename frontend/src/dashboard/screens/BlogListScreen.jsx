@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { 
   useGetBlogsQuery, 
   useDeleteBlogMutation, 
-  useCreateBlogMutation } from '../../slices/blogsApiSlice.js';
+  useCreateBlogMutation 
+} from '../../slices/blogsApiSlice.js';
 import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button.jsx';
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@/components/ui/table.jsx';
 
 const BlogListScreen = () => {
   const navigate = useNavigate();
@@ -15,14 +15,12 @@ const BlogListScreen = () => {
   const [createBlog, { isLoading: loadingCreate }] = useCreateBlogMutation();
 
   const deleteHandler = async (id) => {
-    if (window.confirm('Are you sure')) {
+    if (window.confirm('Are you sure you want to delete this blog?')) {
       try {
-        console.log(`Attempting to delete blog with ID: ${id}`);
         await deleteBlog(id).unwrap();
         toast.success('Blog deleted successfully');
         refetch();
       } catch (err) {
-        console.error('Error deleting blog:', err);
         toast.error(err?.data?.message || err.message);
       }
     }
@@ -41,65 +39,63 @@ const BlogListScreen = () => {
   };
 
   return (
-    <div>
-      <h1>Blogs</h1>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '16px 0' }}>
-        <Button onClick={createBlogHandler} variant="contained" color="blue">
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <h1 className="text-2xl font-bold mb-4">Blogs</h1>
+      <div className="flex justify-end gap-4 mb-4">
+        <Button onClick={createBlogHandler} className="bg-green-500 text-white">
           Create Blog
         </Button>
       </div>
 
       {(loadingCreate || loadingDelete || isLoading) && (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-          <Loader size={48} color="black" className="spinner" />
+        <div className="text-center py-4">
+          <Loader size={48} className="animate-spin mx-auto text-gray-700" />
         </div>
       )}
 
       {!loadingCreate && !loadingDelete && !isLoading && error ? (
-        <div style={{ color: 'red' }}>{error.data.message}</div>
+        <div className="text-red-500">{error.data.message}</div>
       ) : (
         blogs && (
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Title</TableCell>
-                <TableCell>Date</TableCell>
-                <TableCell>Image</TableCell>
-                <TableCell>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {blogs.map((blog) => (
-                <TableRow key={blog._id}>
-                  <TableCell>{blog._id}</TableCell>
-                  <TableCell>{blog.Title}</TableCell>
-                  <TableCell>{new Date(blog.PublishedAt).toLocaleDateString()}</TableCell>
-                  <TableCell>
-                    <img src={blog.image} alt={blog.Title} style={{ width: '50px', height: '50px' }} />
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      onClick={() => navigate(`/dashboard/blogs/${blog._id}/edit`)}
-                      variant="contained"
-                      color="default"
-                      size="small"
-                    >
-                      <Edit size={16} color="blue" />
-                    </Button>
-                    <Button
-                      onClick={() => deleteHandler(blog._id)}
-                      variant="contained"
-                      size="small"
-                      style={{ marginLeft: '8px' }}
-                    >
-                      <Trash size={16} color="red" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white rounded-lg shadow-lg">
+              <thead>
+                <tr className="bg-gray-800 text-white">
+                  {['ID', 'Title', 'Date', 'Image', 'Actions'].map((title) => (
+                    <th key={title} className="text-left px-4 py-2">{title}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {blogs.map((blog, index) => (
+                  <tr key={blog._id} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                    <td className="px-4 py-2">{blog._id}</td>
+                    <td className="px-4 py-2">{blog.Title}</td>
+                    <td className="px-4 py-2">{new Date(blog.PublishedAt).toLocaleDateString()}</td>
+                    <td className="px-4 py-2">
+                      {blog.image && (
+                        <img src={blog.image} alt={blog.Title} className="w-12 h-12 rounded-full object-cover" />
+                      )}
+                    </td>
+                    <td className="px-4 py-2 flex gap-2">
+                      <Button
+                        onClick={() => navigate(`/dashboard/blogs/${blog._id}/edit`)}
+                        className="bg-blue-500 text-white px-3 py-1 rounded-md"
+                      >
+                        <Edit size={16} />
+                      </Button>
+                      <Button
+                        onClick={() => deleteHandler(blog._id)}
+                        className="bg-red-500 text-white px-3 py-1 rounded-md"
+                      >
+                        <Trash size={16} />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )
       )}
     </div>

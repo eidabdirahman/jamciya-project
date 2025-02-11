@@ -1,17 +1,12 @@
 import { Edit, Trash, Loader } from 'lucide-react'; 
 import { useNavigate } from 'react-router-dom';
 import { 
-    useGetProjectsQuery, 
-    useDeleteProjectMutation, 
-    useCreateProjectMutation } from '../../slices/projectApiSlice.js';
+  useGetProjectsQuery, 
+  useDeleteProjectMutation, 
+  useCreateProjectMutation 
+} from '../../slices/projectApiSlice.js';
 import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button.jsx';
-import { 
-    Table, 
-    TableBody, 
-    TableCell, 
-    TableHead, 
-    TableRow } from '@/components/ui/table.jsx';
 
 const ProjectListScreen = () => {
   const navigate = useNavigate();
@@ -20,14 +15,12 @@ const ProjectListScreen = () => {
   const [createProject, { isLoading: loadingCreate }] = useCreateProjectMutation();
 
   const deleteHandler = async (id) => {
-    if (window.confirm('Are you sure')) {
+    if (window.confirm('Are you sure you want to delete this project?')) {
       try {
-        console.log(`Attempting to delete project with ID: ${id}`);
         await deleteProject(id).unwrap();
         toast.success('Project deleted successfully');
         refetch();
       } catch (err) {
-        console.error('Error deleting project:', err);
         toast.error(err?.data?.message || err.message);
       }
     }
@@ -45,87 +38,61 @@ const ProjectListScreen = () => {
     }
   };
 
-  const getStatusStyle = (status) => {
-    const colorMap = {
-      'completed': 'green',
-      'not started': 'red',
-      'ongoing': 'yellow'
-    };
-    const color = colorMap[status.toLowerCase()] || 'black';
-
-    return {
-      color,
-      borderColor: color,
-      borderRadius: '12px',
-      borderWidth: '1px',
-      borderStyle: 'solid',
-      padding: '4px 8px',
-      display: 'inline-block'
-    };
-  };
-
   return (
-    <div>
-      <h1>Projects</h1>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '16px 0' }}>
-        <Button onClick={createProjectHandler} variant="contained" color="blue">
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <h1 className="text-2xl font-bold mb-4">Projects</h1>
+      <div className="flex justify-end gap-4 mb-4">
+        <Button onClick={createProjectHandler} className="bg-green-500 text-white">
           Create Project
         </Button>
       </div>
 
       {(loadingCreate || loadingDelete || isLoading) && (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-          <Loader size={48} color="black" className="spinner" />
+        <div className="text-center py-4">
+          <Loader size={48} className="animate-spin mx-auto text-gray-700" />
         </div>
       )}
 
       {!loadingCreate && !loadingDelete && !isLoading && error ? (
-        <div style={{ color: 'red' }}>{error.data.message}</div>
+        <div className="text-red-500">{error.data.message}</div>
       ) : (
         projects && (
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Project Name</TableCell>
-                <TableCell>Start Date</TableCell>
-                <TableCell>End Date</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {projects.map((project) => (
-                <TableRow key={project._id}>
-                  <TableCell>{project._id}</TableCell>
-                  <TableCell>{project.ProjectName}</TableCell>
-                  <TableCell>{new Date(project.StartDate).toLocaleDateString()}</TableCell>
-                  <TableCell>{new Date(project.EndDate).toLocaleDateString()}</TableCell>
-                  <TableCell style={getStatusStyle(project.Status)}>
-                    {project.Status}
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      onClick={() => navigate(`/dashboard/projects/${project._id}/edit`)}
-                      variant="contained"
-                      color="default"
-                      size="small"
-                    >
-                      <Edit size={16} color="blue" />
-                    </Button>
-                    <Button
-                      onClick={() => deleteHandler(project._id)}
-                      variant="contained"
-                      size="small"
-                      style={{ marginLeft: '8px' }}
-                    >
-                      <Trash size={16} color="red" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white rounded-lg shadow-lg">
+              <thead>
+                <tr className="bg-gray-800 text-white">
+                  {['ID', 'Project Name', 'Start Date', 'End Date', 'Status', 'Actions'].map((title) => (
+                    <th key={title} className="text-left px-4 py-2">{title}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {projects.map((project, index) => (
+                  <tr key={project._id} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                    <td className="px-4 py-2">{project._id}</td>
+                    <td className="px-4 py-2">{project.ProjectName}</td>
+                    <td className="px-4 py-2">{new Date(project.StartDate).toLocaleDateString()}</td>
+                    <td className="px-4 py-2">{new Date(project.EndDate).toLocaleDateString()}</td>
+                    <td className="px-4 py-2">{project.Status}</td>
+                    <td className="px-4 py-2 flex gap-2">
+                      <Button
+                        onClick={() => navigate(`/dashboard/projects/${project._id}/edit`)}
+                        className="bg-blue-500 text-white px-3 py-1 rounded-md"
+                      >
+                        <Edit size={16} />
+                      </Button>
+                      <Button
+                        onClick={() => deleteHandler(project._id)}
+                        className="bg-red-500 text-white px-3 py-1 rounded-md"
+                      >
+                        <Trash size={16} />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )
       )}
     </div>

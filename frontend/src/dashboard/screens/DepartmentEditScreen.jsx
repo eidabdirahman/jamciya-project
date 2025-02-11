@@ -7,6 +7,7 @@ import {
 import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea'; // Importing Textarea component
 import { Loader } from 'lucide-react';
 
 const DepartmentEditScreen = () => {
@@ -52,55 +53,58 @@ const DepartmentEditScreen = () => {
   };
 
   return (
-    <div>
-      <h1>Edit Department</h1>
+    <div className="container mx-auto p-6 bg-gradient-to-r from-blue-50 via-green-50 to-yellow-50 rounded-lg shadow-lg">
+      <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">Edit Department</h1>
       {isLoading || loadingUpdate ? (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+        <div className="flex justify-center items-center h-48">
           <Loader size={48} color="gray" className="spinner" />
         </div>
       ) : error ? (
-        <div style={{ color: 'red' }}>{error.data.message}</div>
+        <div className="text-red-600 text-center">{error.data.message}</div>
       ) : (
-        <form onSubmit={submitHandler}>
-          <div>
-            <label htmlFor="departmentName">Department Name</label>
+        <form onSubmit={submitHandler} className="space-y-6 bg-white p-8 rounded-lg shadow-md">
+          <div className="flex flex-col">
+            <label htmlFor="departmentName" className="text-lg font-medium text-gray-700">Department Name</label>
             <Input
               id="departmentName"
               type="text"
               value={departmentName}
               onChange={(e) => setDepartmentName(e.target.value)}
               required
+              className="mt-2 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div>
-            <label htmlFor="departmentHead">Department Head</label>
+          <div className="flex flex-col">
+            <label htmlFor="departmentHead" className="text-lg font-medium text-gray-700">Department Head</label>
             <Input
               id="departmentHead"
               type="text"
               value={departmentHead}
               onChange={(e) => setDepartmentHead(e.target.value)}
               required
+              className="mt-2 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div>
-            <label htmlFor="description">Description</label>
-            <Input
+          <div className="flex flex-col">
+            <label htmlFor="description" className="text-lg font-medium text-gray-700">Description</label>
+            <Textarea
               id="description"
-              type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
+              className="mt-2 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div>
-            <label htmlFor="image">Image</label>
+          <div className="flex flex-col">
+            <label htmlFor="image" className="text-lg font-medium text-gray-700">Image</label>
             <Input
               id="image"
               type="file"
               onChange={(e) => setImage(e.target.files[0])}
+              className="mt-2 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <Button type="submit" variant="contained" color="primary">
+          <Button type="submit" variant="contained" color="primary" className="w-full mt-6 py-3 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition duration-300">
             Update Department
           </Button>
         </form>

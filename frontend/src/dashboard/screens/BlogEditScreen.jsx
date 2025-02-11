@@ -17,35 +17,45 @@ const BlogEditScreen = () => {
   const { data: blog, isLoading, error } = useGetBlogByIdQuery(blogId);
   const [updateBlog, { isLoading: loadingUpdate }] = useUpdateBlogMutation();
 
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [publishedDate, setPublishedDate] = useState('');
-  const [image, setImage] = useState(null);
+  const [formData, setFormData] = useState({
+    title: '',
+    content: '',
+    publishedDate: '',
+    image: null,
+  });
 
   useEffect(() => {
     if (blog) {
-      setTitle(blog.Title);
-      setContent(blog.Content);
-      setPublishedDate(blog.PublishedAt);
-      setImage(null);
+      setFormData({
+        title: blog.Title,
+        content: blog.Content,
+        publishedDate: blog.PublishedAt.split('T')[0], // Assuming PublishedAt is in ISO format
+        image: null,
+      });
     }
   }, [blog]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
     if (window.confirm('Are you sure you want to update this blog?')) {
       try {
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('content', content);
-        formData.append('publishedDate', publishedDate);
-  
-        if (image) {
-          formData.append('image', image);
+        const formDataToSubmit = new FormData();
+        formDataToSubmit.append('title', formData.title);
+        formDataToSubmit.append('content', formData.content);
+        formDataToSubmit.append('publishedDate', formData.publishedDate);
+
+        if (formData.image) {
+          formDataToSubmit.append('image', formData.image);
         } else {
-          formData.append('image', blog.image); // Ensure existing image is included
+          formDataToSubmit.append('image', blog.image); // Ensure existing image is included
         }
-  
-        await updateBlog({ id: blogId, formData }).unwrap();
+
+        await updateBlog({ id: blogId, ...Object.fromEntries(formDataToSubmit) }).unwrap();
         toast.success('Blog updated successfully');
         navigate('/dashboard/blogs');
       } catch (err) {
@@ -53,59 +63,69 @@ const BlogEditScreen = () => {
       }
     }
   };
-  
-  
-  
 
   return (
-    <div>
-      <h1>Edit Blog</h1>
+    <div className="container mx-auto p-6 bg-gradient-to-r from-blue-50 via-green-50 to-yellow-50">
+      <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">Edit Blog</h1>
+
       {isLoading || loadingUpdate ? (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+        <div className="flex justify-center items-center h-48">
           <Loader size={48} color="gray" className="spinner" />
         </div>
       ) : error ? (
-        <div style={{ color: 'red' }}>{error.data.message}</div>
+        <div className="text-red-600 text-center">{error.data.message}</div>
       ) : (
-        <form onSubmit={submitHandler}>
-          <div>
-            <label htmlFor="title">Title</label>
+        <form onSubmit={submitHandler} className="space-y-6 bg-white p-8 rounded-lg shadow-lg">
+          <div className="flex flex-col">
+            <label htmlFor="title" className="text-lg font-medium text-gray-700">Title</label>
             <Input
               id="title"
+              name="title"
               type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              value={formData.title}
+              onChange={handleChange}
               required
+              className="mt-2 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div>
-            <label htmlFor="content">Content</label>
+
+          <div className="flex flex-col">
+            <label htmlFor="content" className="text-lg font-medium text-gray-700">Content</label>
             <Textarea
               id="content"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+              name="content"
+              value={formData.content}
+              onChange={handleChange}
               required
+              className="mt-2 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div>
-            <label htmlFor="publishedDate">Published Date</label>
+
+          <div className="flex flex-col">
+            <label htmlFor="publishedDate" className="text-lg font-medium text-gray-700">Published Date</label>
             <Input
               id="publishedDate"
+              name="publishedDate"
               type="date"
-              value={publishedDate}
-              onChange={(e) => setPublishedDate(e.target.value)}
+              value={formData.publishedDate}
+              onChange={handleChange}
               required
+              className="mt-2 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div>
-            <label htmlFor="image">Image</label>
+
+          <div className="flex flex-col">
+            <label htmlFor="image" className="text-lg font-medium text-gray-700">Image</label>
             <Input
               id="image"
+              name="image"
               type="file"
-              onChange={(e) => setImage(e.target.files[0])}
+              onChange={(e) => setFormData({ ...formData, image: e.target.files[0] })}
+              className="mt-2 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <Button type="submit" variant="contained" color="primary">
+
+          <Button type="submit" variant="contained" color="primary" className="w-full mt-6 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-teal-400 text-white hover:from-blue-400 hover:to-teal-300 transition-all duration-300">
             Update Blog
           </Button>
         </form>

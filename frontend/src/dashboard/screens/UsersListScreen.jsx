@@ -3,31 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import { 
   useGetUsersQuery, 
   useDeleteUserMutation, 
-  useRegisterMutation } from '@/slices/usersApiSlice.js'; // Updated here
+  useRegisterMutation 
+} from '@/slices/usersApiSlice.js'; 
 import toast from 'react-hot-toast';
-  import { Button } from '@/components/ui/button.jsx';
-import { 
-    Table, 
-    TableBody, 
-    TableCell, 
-    TableHead, 
-    TableRow } from '@/components/ui/table.jsx';
+import { Button } from '@/components/ui/button.jsx';
 
 const UsersListScreen = () => {
   const navigate = useNavigate();
   const { data: users, isLoading, error, refetch } = useGetUsersQuery();
-  const [deleteUser, { isLoading: loadingDelete }] = useDeleteUserMutation();
-  const [register, { isLoading: loadingRegister }] = useRegisterMutation(); // Updated here
+  const [deleteUser , { isLoading: loadingDelete }] = useDeleteUserMutation();
+  const [register, { isLoading: loadingRegister }] = useRegisterMutation();
 
   const deleteHandler = async (id) => {
-    if (window.confirm('Are you sure')) {
+    if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        console.log(`Attempting to delete user with ID: ${id}`);
-        await deleteUser(id).unwrap();
-        toast.success('User deleted successfully');
+        await deleteUser (id).unwrap();
+        toast.success('User  deleted successfully');
         refetch();
       } catch (err) {
-        console.error('Error deleting user:', err);
         toast.error(err?.data?.message || err.message);
       }
     }
@@ -36,8 +29,8 @@ const UsersListScreen = () => {
   const createUserHandler = async () => {
     if (window.confirm('Are you sure you want to create a new user?')) {
       try {
-        await register().unwrap(); // Updated here
-        toast.success('User created successfully');
+        await register().unwrap();
+        toast.success('User  created successfully');
         refetch();
       } catch (err) {
         toast.error(err?.data?.message || err.message || 'An error occurred while creating the user');
@@ -46,64 +39,59 @@ const UsersListScreen = () => {
   };
 
   return (
-    <div>
-      <h1>Users</h1>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '16px 0' }}>
-        <Button onClick={createUserHandler} variant="contained" color="blue">
+    <div className="p-6 bg-gray-100 min-h-screen">
+      <h1 className="text-2xl font-bold mb-4">Users</h1>
+      <div className="flex justify-end gap-4 mb-4">
+        <Button onClick={createUserHandler} className="bg-green-500 text-white">
           Create User
         </Button>
       </div>
 
       {(loadingRegister || loadingDelete || isLoading) && (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-          <Loader size={48} color="black" className="spinner" />
+        <div className="text-center py-4">
+          <Loader size={48} className="animate-spin mx-auto text-gray-700" />
         </div>
       )}
 
       {!loadingRegister && !loadingDelete && !isLoading && error ? (
-        <div style={{ color: 'red' }}>{error.data.message}</div>
+        <div className="text-red-500">{error.data.message}</div>
       ) : (
         users && (
-          <Table role="table"> {/* Added role attribute here */}
-            <TableHead>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Date Joined</TableCell>
-                <TableCell>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {users.map((user) => (
-                <TableRow key={user._id}>
-                  <TableCell>{user._id}</TableCell>
-                  <TableCell>{user.name}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.role}</TableCell>
-                  <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
-                  <TableCell>
-                    <Button
-                      onClick={() => navigate(`/dashboard/users/${user._id}/edit`)}
-                      variant="contained"
-                      color="default"
-                      size="small"
-                    >
-                      <Edit size={16} color="blue" />
-                    </Button>
-                    <Button
-                      onClick={() => deleteHandler(user._id)}
-                      variant="contained"
-                      size="small"
-                      style={{ marginLeft: '8px' }}
-                    >
-                      <Trash size={16} color="red" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white rounded-lg shadow-lg">
+              <thead>
+                <tr className="bg-gray-800 text-white">
+                  {['ID', 'Name', 'Email', 'Date Joined', 'Actions'].map((title) => (
+                    <th key={title} className="text-left px-4 py-2">{title}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user, index) => (
+                  <tr key={user._id} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                    <td className="px-4 py-2">{user._id}</td>
+                    <td className="px-4 py-2">{user.name}</td>
+                    <td className="px-4 py-2">{user.email}</td>
+                    <td className="px-4 py-2">{new Date(user.createdAt).toLocaleDateString()}</td>
+                    <td className="px-4 py-2 flex gap-2">
+                      <Button
+                        onClick={() => navigate(`/dashboard/users/${user._id}/edit`)}
+                        className="bg-blue-500 text-white px-3 py-1 rounded-md"
+                      >
+                        <Edit size={16} />
+                      </Button>
+                      <Button
+                        onClick={() => deleteHandler(user._id)}
+                        className="bg-red-500 text-white px-3 py-1 rounded-md"
+                      >
+                        <Trash size={16} />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )
       )}
     </div>
